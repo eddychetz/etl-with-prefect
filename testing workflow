@@ -1,49 +1,215 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0" version="29.3.6">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1223" dy="898" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1940" dy="1875" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-2" value="" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" target="WIyWlLk6GJQsqaUBKTNV-6" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-3" value="Lamp doesn&#39;t work" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="160" y="80" width="120" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-4" value="Yes" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-6" target="WIyWlLk6GJQsqaUBKTNV-10" edge="1">
-          <mxGeometry y="20" relative="1" as="geometry">
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-4" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="5rHOOA8W0jUErMRuTXGA-0" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="WIyWlLk6GJQsqaUBKTNV-10" value="Yes">
+          <mxGeometry relative="1" y="20" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-5" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-6" target="WIyWlLk6GJQsqaUBKTNV-7" edge="1">
-          <mxGeometry y="10" relative="1" as="geometry">
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-5" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;" value="No">
+          <mxGeometry relative="1" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="414" y="180" />
+              <mxPoint x="160" y="180" />
+              <mxPoint x="160" y="230" />
+              <mxPoint x="190" y="230" />
+            </Array>
+            <mxPoint x="414" y="185" as="sourcePoint" />
+            <mxPoint x="190" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-8" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;" value="No">
+          <mxGeometry relative="1" x="0.3333" y="20" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="1040.0000000000002" y="430" as="sourcePoint" />
+            <mxPoint x="1070.0000000000002" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-9" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;" target="WIyWlLk6GJQsqaUBKTNV-12" value="Yes">
+          <mxGeometry relative="1" y="10" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-6" value="Lamp&lt;br&gt;plugged in?" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="170" y="170" width="100" height="80" as="geometry" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-10" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;" value="Unmatched Products?" vertex="1">
+          <mxGeometry height="80" width="100" x="870" y="455" as="geometry" />
         </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-7" value="Plug in lamp" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="320" y="190" width="120" height="40" as="geometry" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-12" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" value="Save unmatched products" vertex="1">
+          <mxGeometry height="40" width="120" x="690" y="430" as="geometry" />
         </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-8" value="No" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-10" target="WIyWlLk6GJQsqaUBKTNV-11" edge="1">
-          <mxGeometry x="0.3333" y="20" relative="1" as="geometry">
-            <mxPoint as="offset" />
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-2" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="5rHOOA8W0jUErMRuTXGA-19" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitPerimeter=0;" target="5rHOOA8W0jUErMRuTXGA-5" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="365" y="-100" />
+              <mxPoint x="550" y="-100" />
+            </Array>
+            <mxPoint x="520" y="-100" as="sourcePoint" />
+            <mxPoint x="480" y="-10" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-9" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-10" target="WIyWlLk6GJQsqaUBKTNV-12" edge="1">
-          <mxGeometry y="10" relative="1" as="geometry">
-            <mxPoint as="offset" />
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-13" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="-60" as="sourcePoint" />
+            <mxPoint x="360" y="-60" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-10" value="Bulb&lt;br&gt;burned out?" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="170" y="290" width="100" height="80" as="geometry" />
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-28" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;exitX=0.356;exitY=0.95;exitDx=0;exitDy=0;exitPerimeter=0;" value="Clean Data">
+          <mxGeometry relative="1" y="20" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="924.7080000000001" y="156.25" as="sourcePoint" />
+            <mxPoint x="830" y="253.75" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-11" value="Repair Lamp" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="160" y="430" width="120" height="40" as="geometry" />
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-29" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" value="Errors">
+          <mxGeometry relative="1" y="20" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="951" y="165" />
+              <mxPoint x="951" y="225" />
+              <mxPoint x="945" y="225" />
+            </Array>
+            <mxPoint x="930" y="165" as="sourcePoint" />
+            <mxPoint x="945.25" y="245" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-12" value="Replace Bulb" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="320" y="310" width="120" height="40" as="geometry" />
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-33" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;" value="" vertex="1">
+          <mxGeometry height="170" width="1040" y="-240" as="geometry">
+            <mxRectangle height="40" width="50" x="260" y="-200" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-19" parent="5rHOOA8W0jUErMRuTXGA-33" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="&lt;span style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; text-align: start; caret-color: rgba(0, 0, 0, 0);&quot;&gt;&lt;span style=&quot;caret-color: rgba(0, 0, 0, 0);&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;í ½í³¥ Email Inputs&lt;/font&gt;&lt;/b&gt;&lt;/span&gt;&lt;/span&gt;&lt;div&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; text-align: start; caret-color: rgba(0, 0, 0, 0);&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;í ¼í¼ FTP Servers&lt;/font&gt;&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="100" x="310" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-40" parent="5rHOOA8W0jUErMRuTXGA-33" style="shape=card;whiteSpace=wrap;html=1;size=0;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;ul style=&quot;&quot;&gt;&lt;li style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Users send attachments (Excel/CSV).&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;You download attachments or automate extraction with Python + outlook API.&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="380" x="650" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-41" parent="5rHOOA8W0jUErMRuTXGA-33" style="shape=card;whiteSpace=wrap;html=1;size=0;align=left;" value="&lt;div style=&quot;line-height: 20px;&quot;&gt;&lt;ul style=&quot;&quot;&gt;&lt;li style=&quot;&quot;&gt;&lt;font face=&quot;Segoe UI&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Files arrive on schedule.&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font face=&quot;Segoe UI&quot;&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Python scripts fetch files from FTP using Cron/Prefect triggers.&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="380" x="650" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-62" parent="5rHOOA8W0jUErMRuTXGA-33" style="rounded=0;whiteSpace=wrap;html=1;flipV=1;legacyAnchorPoints=0;align=left;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&amp;nbsp;1. Data Sources Layer&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="240" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-34" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;" value="" vertex="1">
+          <mxGeometry height="190" width="1040" y="-40" as="geometry">
+            <mxRectangle height="40" width="50" x="260" y="-10" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-5" parent="5rHOOA8W0jUErMRuTXGA-34" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;size=0.05;" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;caret-color: rgba(0, 0, 0, 0);&quot;&gt;Prefect Flow: Injestion&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" vertex="1">
+          <mxGeometry height="30" width="240" x="430" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-36" parent="5rHOOA8W0jUErMRuTXGA-34" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;í ½í³Š Flow Monitoring&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="140" x="290" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-17" parent="5rHOOA8W0jUErMRuTXGA-34" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;align=left;size=0.05181347150259067;" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;caret-color: rgba(0, 0, 0, 0);&quot;&gt;Prefect Flow: Python Cleaning &amp;amp; Validation&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" vertex="1">
+          <mxGeometry height="60" width="230" x="430" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-37" parent="5rHOOA8W0jUErMRuTXGA-34" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;âš™ï¸ Scheduled Flows&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="140" x="290" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-27" parent="5rHOOA8W0jUErMRuTXGA-34" style="shape=card;whiteSpace=wrap;html=1;size=0;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 11px;&quot;&gt;&amp;nbsp;I:&lt;/b&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 11px;&quot;&gt; Prefect provides run logs, retry logic, task dependencies, and alerts.&lt;/span&gt;&lt;br&gt;&lt;strong style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 11px;&quot;&gt;&amp;nbsp;O:&amp;nbsp;&lt;/strong&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 11px;&quot;&gt;Clean structured tables â†’ sent to MySQL (staging clean tables).&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="370" x="660" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-42" parent="5rHOOA8W0jUErMRuTXGA-34" style="shape=card;whiteSpace=wrap;html=1;size=0;align=left;" value="&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 11px;&quot;&gt;&amp;nbsp;Downloads email/FTP files to staging.&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="360" x="670" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-8" parent="5rHOOA8W0jUErMRuTXGA-34" style="rounded=0;whiteSpace=wrap;html=1;flipV=1;legacyAnchorPoints=0;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;2. Prefect Cloud Automation Layer&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="240" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-39" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;" value="" vertex="1">
+          <mxGeometry height="180" width="1050" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-45" parent="5rHOOA8W0jUErMRuTXGA-39" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;font&gt;&lt;b&gt;í ½í´ Buyer Matching Script&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="290" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-9" parent="5rHOOA8W0jUErMRuTXGA-39" style="rounded=0;whiteSpace=wrap;html=1;flipV=1;legacyAnchorPoints=0;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;&amp;nbsp;3. Buyer Matching Layer (Perl Script)&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="240" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-58" parent="5rHOOA8W0jUErMRuTXGA-39" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Must be surfaced on the &lt;b&gt;Power BI&lt;/b&gt; dashboard for:&lt;/span&gt;&lt;br&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Data quality alerts&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Manual corrections&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Backlog monitoring&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="115" width="230" x="290" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-72" parent="5rHOOA8W0jUErMRuTXGA-39" style="shape=card;whiteSpace=wrap;html=1;size=20;align=left;" value="&lt;div style=&quot;&quot;&gt;&lt;strong style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-family: &amp;quot;Segoe UI&amp;quot;;&quot;&gt;&amp;nbsp; Matched Buyers â†’&amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;&lt;code&gt;buyers_matched_raw&lt;/code&gt;&lt;/strong&gt;&lt;/div&gt;&lt;ul&gt;&lt;li style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-family: &amp;quot;Segoe UI&amp;quot;;&quot;&gt;Goes directly into your &lt;/span&gt;&lt;strong style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-family: &amp;quot;Segoe UI&amp;quot;;&quot;&gt;analysis-ready fact &lt;/strong&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-family: &amp;quot;Segoe UI&amp;quot;;&quot;&gt;table&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-family: &amp;quot;Segoe UI&amp;quot;;&quot;&gt;.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" vertex="1">
+          <mxGeometry height="150" width="210" x="550" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-73" parent="5rHOOA8W0jUErMRuTXGA-39" style="shape=card;whiteSpace=wrap;html=1;size=20;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp; â— &lt;/span&gt;&lt;strong style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Unmatched Buyers â†’ &lt;code&gt;buyers_unmatched&lt;/code&gt;&lt;/strong&gt;&lt;br&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp; Must be surfaced on the &lt;b&gt;Power BI &lt;/b&gt;dashboard for:&lt;/span&gt;&lt;br&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Data quality alerts&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Manual corrections&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Backlog monitoring&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="150" width="270" x="770" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-44" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;arcSize=0;" value="í ½í´ Buyer Matching Script" vertex="1">
+          <mxGeometry height="30" width="200" x="440" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-49" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;" value="" vertex="1">
+          <mxGeometry height="240" width="1040" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-52" parent="5rHOOA8W0jUErMRuTXGA-49" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;font&gt;&lt;b&gt;í ½í³¦ Product Matching Procedure&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="220" x="320" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-53" parent="5rHOOA8W0jUErMRuTXGA-49" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;í ¼í¶• New Product Identification&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="230" x="320" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-55" parent="5rHOOA8W0jUErMRuTXGA-49" style="shape=card;whiteSpace=wrap;html=1;size=0;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;font&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;Matching logic uses:&lt;/span&gt;&lt;br&gt;&lt;/font&gt;&lt;ul style=&quot;&quot;&gt;&lt;li style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;product descriptions,&amp;nbsp;&lt;/font&gt;&lt;/span&gt;SKU codes and supplier mappings&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="72.5" width="350" x="680" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-56" parent="5rHOOA8W0jUErMRuTXGA-49" style="shape=card;whiteSpace=wrap;html=1;size=0;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;div style=&quot;line-height: 20px;&quot;&gt;&lt;ul&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Store new items in &lt;code style=&quot;&quot;&gt;products_unmatched&lt;/code&gt;&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Display on Power BI for &lt;strong style=&quot;&quot;&gt;action required&lt;/strong&gt;&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="55" width="350" x="680" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-57" parent="5rHOOA8W0jUErMRuTXGA-49" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;p style=&quot;&quot;&gt;&lt;font&gt;&lt;font&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Triggered &lt;/span&gt;&lt;strong style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;only when all buyers are matched.&lt;/strong&gt;&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;&quot;&gt;&lt;font&gt;Once new products are manually assigned categories, update:&lt;/font&gt;&lt;/p&gt;&lt;ul style=&quot;&quot;&gt;&lt;li style=&quot;&quot;&gt;&lt;code&gt;&lt;font&gt;products_matched_raw&lt;/font&gt;&lt;/code&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Append to your main &lt;strong style=&quot;&quot;&gt;fact_transactions_ready&lt;/strong&gt; table.&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="310" x="10" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-10" parent="5rHOOA8W0jUErMRuTXGA-49" style="rounded=0;whiteSpace=wrap;html=1;flipV=1;legacyAnchorPoints=0;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;&amp;nbsp;4. Product Matching Layer (SQL Stored Procedure)&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="290" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-50" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;" value="" vertex="1">
+          <mxGeometry height="310" width="1050" x="-10" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-12" parent="5rHOOA8W0jUErMRuTXGA-50" style="rounded=0;whiteSpace=wrap;html=1;flipV=1;legacyAnchorPoints=0;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;div style=&quot;line-height: 20px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;&amp;nbsp;6. Power BI Refresh Layer&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="255" x="7.5" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-65" parent="5rHOOA8W0jUErMRuTXGA-50" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;font&gt;&lt;b&gt;í ½í³Š Dashboards&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="100" x="280" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-64" parent="5rHOOA8W0jUErMRuTXGA-50" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;font&gt;í ½í´„ &lt;b&gt;Power BI Dataflows&lt;/b&gt; or &lt;b&gt;Direct MySQL &lt;/b&gt;Connection&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="310" x="280" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-66" parent="5rHOOA8W0jUErMRuTXGA-50" style="shape=card;whiteSpace=wrap;html=1;size=0;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Power BI connects to MySQL using a Gateway.&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Scheduled refresh after Prefect &amp;amp; matching pipelines complete.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="390" x="650" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-68" parent="5rHOOA8W0jUErMRuTXGA-50" style="shape=card;whiteSpace=wrap;html=1;size=20;" value="&lt;div style=&quot;text-align: start; font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;div style=&quot;line-height: 20px;&quot;&gt;&lt;h4 style=&quot;&quot;&gt;&lt;strong style=&quot;&quot;&gt;&lt;font&gt;&amp;nbsp; &amp;nbsp;Operational Views&lt;/font&gt;&lt;/strong&gt;&lt;/h4&gt;&lt;ul style=&quot;&quot;&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Buyer mapping dashboard&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Product mapping dashboard&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;File ingestion status&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Analysis-ready facts&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="180" x="670" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-69" parent="5rHOOA8W0jUErMRuTXGA-50" style="shape=card;whiteSpace=wrap;html=1;size=20;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;h4 style=&quot;&quot;&gt;&lt;strong style=&quot;&quot;&gt;&lt;font&gt;&amp;nbsp; Client-Facing Reports&lt;/font&gt;&lt;/strong&gt;&lt;/h4&gt;&lt;ul style=&quot;&quot;&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Sales&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Buyers performance&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Stores&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Product mix&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Any ad-hoc analysis&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="170" x="870" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-67" parent="5rHOOA8W0jUErMRuTXGA-50" style="shape=card;whiteSpace=wrap;html=1;size=20;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;div style=&quot;line-height: 20px;&quot;&gt;&lt;h4 style=&quot;&quot;&gt;&lt;strong style=&quot;&quot;&gt;&lt;font&gt;&amp;nbsp; Data Quality KPIs&lt;/font&gt;&lt;/strong&gt;&lt;/h4&gt;&lt;ul style=&quot;&quot;&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Count of unmatched buyers&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Count of unmatched products&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Files received vs expected&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Last Prefect flow run status&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;font&gt;Timestamp of last MySQL update&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="230" x="424" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-51" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;" value="" vertex="1">
+          <mxGeometry height="200" width="1040" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-59" parent="5rHOOA8W0jUErMRuTXGA-51" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;align=left;" value="&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;&amp;nbsp; &amp;nbsp; í ½í³&lt;b style=&quot;&quot;&gt; Core Tables: MySQL&lt;/b&gt;&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;ol style=&quot;&quot;&gt;&lt;li style=&quot;&quot;&gt;&lt;span style=&quot;font-family: monospace; caret-color: rgba(0, 0, 0, 0);&quot;&gt;&lt;font&gt;Buyers_matched_raw&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;span style=&quot;font-family: monospace; caret-color: rgba(0, 0, 0, 0);&quot;&gt;&lt;font&gt;buyers_unmatched&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;span style=&quot;font-family: monospace; caret-color: rgba(0, 0, 0, 0);&quot;&gt;&lt;font&gt;transactions_ready&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;span style=&quot;font-family: monospace; caret-color: rgba(0, 0, 0, 0);&quot;&gt;&lt;font&gt;products_unmatched&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;&quot;&gt;&lt;span style=&quot;font-family: monospace; caret-color: rgba(0, 0, 0, 0);&quot;&gt;&lt;font&gt;products_matched_raw&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="180" x="280" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-11" parent="5rHOOA8W0jUErMRuTXGA-51" style="rounded=0;whiteSpace=wrap;html=1;flipV=1;legacyAnchorPoints=0;align=left;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font&gt;&amp;nbsp;5. MySQL Data Warehouse Layer&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="250" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-31" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;arcSize=0;" value="Unmatched Buyers" vertex="1">
+          <mxGeometry height="40" width="120" x="120" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-7" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;arcSize=0;" value="Save Unmatched Buyers" vertex="1">
+          <mxGeometry height="40" width="120" x="326" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-63" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;text-align: start; font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;font&gt;&lt;strong style=&quot;&quot;&gt;Output:&lt;/strong&gt; All raw files land in &lt;strong style=&quot;&quot;&gt;Staging Storage&lt;/strong&gt; (local folder / S3 bucket / MySQL staging).&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="180" x="50" y="-120" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-70" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Power BI&lt;/b&gt; connects to &lt;b&gt;MySQL &lt;/b&gt;using a &lt;b&gt;Gateway&lt;/b&gt;.&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Scheduled refresh after &lt;b&gt;Prefect &lt;/b&gt;&amp;amp; matching pipelines complete.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="250" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-71" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;div style=&quot;text-align: start; font-family: &amp;quot;Segoe UI&amp;quot;; line-height: 20px;&quot;&gt;&lt;font&gt;The pipeline pushes cleansed &amp;amp; matched tables into &lt;b&gt;MySQL&lt;/b&gt;.&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="240" x="10" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="5rHOOA8W0jUErMRuTXGA-0" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="Run Cron" vertex="1">
+          <mxGeometry height="60" width="120" x="910" y="455" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
