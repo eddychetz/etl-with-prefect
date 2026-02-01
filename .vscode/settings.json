@@ -1,0 +1,5 @@
+{
+    "powerquery.client.additionalSymbolsDirectories": [
+        "c:/Users/Eddie/OneDrive - eRoute2Market/eRoute2Market/Agents/prefect/etl-with-prefect/.vscode/excel-pq-symbols"
+    ]
+}
