@@ -9,6 +9,7 @@
 
 # 1.0 Libraries ----
 from prefect import flow, task#, get_run_logger
+from prefect.blocks.system import JSON
 
 # 2.0 Extract ----
 @task
@@ -26,7 +27,7 @@ def load():
     print('Hello, step 3 is running!!')
 
 # 5.0 Main Flow ----
-@flow(name='ETL Workflow')
+@flow(name='ETL Workflow', log_prints=True)
 def main_flow():
     step1 = extract()
     print(step1)
@@ -41,6 +42,6 @@ if __name__ == '__main__':
 
 
 # 7.0 Deployment
-# * run `prefect api`
-# * run `prefect deploy etl-with-prefect/main.py:main_flow -name test-deployment`
+# * prefect deploy [OPTIONS] [ENTRYPOINT] e.g ./etl-with-prefect/main.py:main_flow
+# * run `prefect deploy -name test-deployment ./etl-with-prefect/main.py:main_flow`
 # * run `prefect dashboard`
