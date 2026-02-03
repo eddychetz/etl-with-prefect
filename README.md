@@ -4,7 +4,7 @@ A data pipeline for daily data injestions
 
 STEPS:
 
-Step 1: Install Prefect on virtual environment `prefect-env`
+Step 1: Install Prefect on virtual environment `prefect-env` or activate by running `prefect-venv\Scripts\activate`
 
 Identify path with `python.exe` file by running `py -c "import sys; print(sys.executable)"` on terminal.
 

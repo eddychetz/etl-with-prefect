@@ -1,2 +1,22 @@
-prefect
+openpyxl
+openai
 pandas
+numpy
+plotly
+streamlit
+scikit-learn
+xgboost
+langchain >= 1.0.0
+langchain_community
+langchain_experimental
+langchain-ollama
+langchain_openai >= 1.0.0
+langgraph >= 1.0.0
+sqlalchemy
+prefect
+psutil
+streamlit-flow-component
+pandera
+paramiko
+tqdm
+glob
