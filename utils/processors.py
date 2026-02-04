@@ -9,6 +9,9 @@ from pathlib import Path
 from typing import Dict, List, Tuple, Optional
 import pandas as pd
 import pandera as pa
+from pandera.typing.pandas import Series
+ 
+ 
 GROUPS: Dict[str, List[Tuple[str, Optional[str]]]] = {
     # (import_name, pip_name or None if same)
     "stdlib": [
@@ -106,7 +109,7 @@ def ensure_one(import_name: str, pip_name: Optional[str] = None):
 
     # Retry import
     return import_module_dotted(import_name)
-
+ 
 # ---------------------------
 # 4) Ensure whole groups (returns dict of imported modules)
 # ---------------------------

@@ -1,37 +1,32 @@
 # Install Prefect ----
+# *********************************************************
 # * pip install prefect
 # * prefect cloud login and choose to login with a web browser
-
+ 
 # * run `prefect deploy etl-with-prefect/main.py:main_flow`
-# Installing libraries
+ 
+# *********************************************************
+# Installing libraries ----
+# *********************************************************
 # File System & Utilities
 # ----------------------
 import os
 import zipfile
-import getpass
 from glob import glob
 from pathlib import Path
 from dotenv import load_dotenv
 from utils.processors import get_latest_zip, validate_data, validate_dates
-from typing import Tuple, Optional, Callable
-# import ftplib
-# import tempfile
-# from io import BytesIO
-
+from typing import Dict, List, Tuple, Optional
+ 
 # Data Manipulation & time
 # -------------------------
 import numpy as np
 import pandas as pd
-from datetime import timedelta, datetime
-
+from datetime import datetime
+ 
 # FTP server communication
 # -------------------------
 import paramiko
-
-# Data Validation
-# ----------------
-import pandera as pa
-from pandera.typing.pandas import Series
 
 # For workflow automation
 # -----------------------
@@ -46,8 +41,11 @@ warnings.simplefilter('ignore')
 load_dotenv()
 
 # Print current working directory
-print(os.getcwd()) # os.getcwd()
-# Download data ----
+print(os.getcwd())
+ 
+# *********************************************************
+# 1. Download data ----
+# ********************************************************* 
 @task(name='Download data from FTP server', retries=3)
 def download_data():
     """
@@ -137,8 +135,11 @@ def download_data():
             client.close()
         except Exception:
             pass
+
+# *********************************************************
 # 2.0 Extract ----
-@task(name='')
+# *********************************************************
+@task(name='Data Extraction')
 def extract_data() -> pd.DataFrame:
     """
     Extract the first CSV file from a ZIP archive and load it into a pandas DataFrame.
@@ -148,7 +149,7 @@ def extract_data() -> pd.DataFrame:
     - safe extraction into a temp folder
     - consistent return behavior
     """
-    zip_file_path = get_latest_zip(directory=os.getenv('zip_file_path'), pattern='Vilbev-*.zip')
+    zip_file_path = get_latest_zip(directory=str(os.getenv('zip_file_path')), pattern='Vilbev-*.zip')
     logger = get_run_logger()
     if not os.path.exists(zip_file_path):
         raise FileNotFoundError(f"❌ ZIP file does not exist: {zip_file_path}")
@@ -188,8 +189,11 @@ def extract_data() -> pd.DataFrame:
                 raise ValueError(f"❌ Failed to read CSV inside ZIP: {e}")
 
     return df
-# 3.0 Transform ----
-@task
+
+# *********************************************************
+# 3.0 Transform ---- 
+# *********************************************************
+@task(name='Data transformation')
 def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Function to transform Viljoen Beverages data
@@ -220,10 +224,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     df1['Physical_Address2']=df['Physical_Address2']
     df1['Physical_Address3']=df['Physical_Address3']
     df1['Physical_Address4']=(
-        df['Deliver1'].fillna('').astype(str) +' '+
-        df['Deliver2'].fillna('').astype(str) +' '+
-        df['Deliver3'].fillna('').astype(str) +' '+
-        df['Deliver4'].fillna('').astype(str)
+        df['Deliver1'].fillna('').astype(str)+' '+df['Deliver2'].fillna('').astype(str)+' '+df['Deliver3'].fillna('').astype(str)+' '+df['Deliver4'].fillna('').astype(str)
         ).str.strip()
 
     df1['Telephone']=df['Telephone']
@@ -233,22 +234,25 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     df1['Quantity']=df['Quantity']
     df1['RepCode']=df['Rep']
     df1['ProductBarCodeID']=''
-
-    print(f"ℹ️ Total quantity: {np.sum(df1['Quantity']):.0f}\n")
+    
+    logger.info(f"ℹ️  Total quantity: {np.sum(df1['Quantity']):.0f}\n")
 
     df2=df1.copy()
     df2['Date']=pd.to_datetime(df2['Date'])
-    df2['Date']=df2['Date'].apply(lambda x: x.strftime("%Y-%m-%d"))
-
+    # filling up missing Name for Spar Northrand
     df1["Name"].fillna('SPAR NORTH RAND (11691)', inplace=True)
-    #   DATE FORMAT CLEANING
+    
+    #   DATE FORMAT CLEANING - Always monitor on the date format when transforming data
     # -----------------------------
-    print("✅ Date fomat cleaned")
-    df1['Date'] = pd.to_datetime(df1['Date'], errors="coerce").dt.strftime("%Y-%m-%d")
+    logger.info("✅ Date fomat cleaned")
+    df1['Date'] = pd.to_datetime(df1['Date'], errors="coerce").dt.strftime("%Y-%d-%m")
     logger.info("✅ Data transformation complete!")
 
     return df1
+
+# *********************************************************
 # 4.0 Load ----
+# *********************************************************
 @task(name='Loading data to local repo')
 def load_to_local(
     df: pd.DataFrame,
@@ -269,6 +273,8 @@ def load_to_local(
         full_path -> absolute path to the intended CSV
         saved     -> True if file was written, False if skipped (already existed)
     """
+
+
     # --- Resolve OUTPUT_DIR ---
     output_dir = os.getenv("OUTPUT_DIR")
     if not output_dir:
@@ -302,7 +308,7 @@ def load_to_local(
             except Exception as e:
                 logger.error(f"❌ Error deleting {p.name}: {e}")
         if not deleted_any:
-            logger.info("ℹ️ No matching CSV files found to delete.")
+            logger.info("ℹ️  No matching CSV files found to delete.")
 
     # --- Prepare and validate dates ---
     if "Date" not in df.columns:
@@ -335,26 +341,289 @@ def load_to_local(
     data.to_csv(full_path, index=False)
     logger.info(f"\n✅ Data saved to:\n📁 {full_path}")
     return str(full_path), True
+ 
+ 
+# *********************************************************
+# 5.0 Load to FTP server ----
+# *********************************************************
+@task(name='Uploading data to FTP server')
+def upload_to_server(csv_file_path: str = None,) -> Optional[str]:
+    """
+    Upload a specific CSV file to an SFTP server using only paramiko.
 
+    Parameters:
+    -----------
+    csv_file_path : str
+        Path to the local CSV file to upload. If None, it will pick the first
+        file matching 'Viljoenbev_*.csv' in `output_dir`.
+
+    Returns:
+    --------
+    str or None
+        Remote path where the file was uploaded, or None if the upload failed.
+    """
+    logger = get_run_logger()
+ 
+    # ---- CONNECT ----
+    sftp_host = os.getenv('ftp_host')
+    sftp_port = int(os.getenv('ftp_port'))  # ensure integer
+    sftp_user = os.getenv('ftp_user')
+    sftp_pass  = os.getenv('ftp_pass')
+
+    remote_dir = os.getenv('ftp_dir')
+
+    # Fallback to discover a file if not provided (mirrors your original default idea)
+    if csv_file_path is None:
+        # Adjust `output_dir` to your actual variable/scope if needed
+        output_dir = os.getenv('OUTPUT_DIR')
+        matches = glob(os.path.join(output_dir, 'Viljoenbev_*.csv'))
+        if not matches:
+            logger.warning("⚠️ No CSV file found matching 'Viljoenbev_*.csv'.")
+            return None
+        csv_file_path = matches[0]
+
+    try:
+        # Verify the local file exists
+        if not os.path.exists(csv_file_path):
+            logger.warning(f"⚠️ Local file not found: {csv_file_path}")
+            return None
+
+        filename = os.path.basename(csv_file_path)
+        # Normalize remote path to POSIX style for SFTP
+        remote_dir_posix = remote_dir.replace('\\', '/').rstrip('/') + '/'
+        remote_path = (remote_dir_posix + filename)
+
+        # Create SSH client and connect
+        ssh = paramiko.SSHClient()
+
+        # WARNING: Auto-adding host keys reduces security. Prefer loading known hosts in production.
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        logger.info(f"🔐 Connecting to FTP server as {sftp_user}.")
+        ssh.connect(
+            hostname=sftp_host,
+            port=sftp_port,
+            username=sftp_user,
+            password=sftp_pass,
+            look_for_keys=False,
+            allow_agent=False,
+            timeout=30
+        )
+
+        try:
+            # Open SFTP session
+            sftp = ssh.open_sftp()
+
+            # Ensure remote directory exists (create recursively if missing)
+            _ensure_remote_dir(sftp, remote_dir_posix)
+
+            # Upload with confirmation via file size/stat check
+            logger.info(f"🚀 Uploading {filename} to {remote_path}...")
+            sftp.put(csv_file_path, remote_path)
+
+            # Optional: verify upload completed by checking remote file size
+            local_size = os.path.getsize(csv_file_path)
+            remote_stat = sftp.stat(remote_path)
+            if remote_stat.st_size != local_size:
+                logger.warning("⚠️ Size mismatch after upload. Upload may be incomplete.")
+                return None
+
+            logger.info("✅ Upload completed successfully!")
+            return None
+
+        finally:
+            try:
+                sftp.close()
+            except Exception:
+                pass
+            ssh.close()
+
+    except paramiko.AuthenticationException:
+        logger.warning("⚠️ Authentication failed. Please verify username/password (or key).")
+        return None
+    except paramiko.SSHException as e:
+        logger.error(f"❌ SSH/SFTP error: {e}")
+        return None
+    except Exception as e:
+        logger.error(f"❌ Error uploading file: {e}")
+        return None
+
+# Remote Directory Helpers
+# ------------------------------
+def _ensure_remote_dir(sftp: paramiko.SFTPClient, remote_dir_posix: str) -> None:
+    """
+    Recursively create remote directories if they do not exist.
+    `remote_dir_posix` must be a POSIX-style path ending with '/'.
+    """
+    # Split path into components and build progressively
+    # Handle absolute paths like '/home/user/data/'
+    parts = [p for p in remote_dir_posix.split('/') if p]
+    prefix = '/' if remote_dir_posix.startswith('/') else ''
+
+    current = prefix
+    for part in parts:
+        current = (current.rstrip('/') + '/' + part)
+        try:
+            sftp.stat(current)  # Exists
+        except FileNotFoundError:
+            sftp.mkdir(current)
+
+ 
+# *********************************************************
+# 6.0 Running importtxns.pl on CLI ----
+# *********************************************************
+@task(name='Running `importtxns.pl` file on CLI')
+def run_import(timeout: int = 120):
+    """
+    Connect to a remote server via SSH and execute commands, first testing then running.
+
+    Args:
+        timeout (int): Timeout for command execution in seconds
+
+    Returns:
+        tuple: (stdout, stderr, exit_code) from the last command executed
+    """
+    logger = get_run_logger()
+    
+    # Access login credentials
+    hostname = os.getenv('host_name')
+    port = int(os.getenv('port'))
+    username = os.getenv('user_name')
+    password = os.getenv('password')
+
+    # Define commands
+    commands = {
+        'test': "/usr/local/eroute2market/supply_chain/scripts/importtxns.pl /home/viljoenbev/data 1",
+        'run': "/usr/local/eroute2market/supply_chain/scripts/importtxns.pl /home/viljoenbev/data 1"
+    }
+
+    # If no password provided, prompt for it securely
+    if password is None:
+        password = getpass.getpass(f"🔐 Enter SSH password for {username}@{hostname}: ")
+
+    # Create an SSH client instance
+    client = paramiko.SSHClient()
+
+    try:
+        # Automatically add the server's host key
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        # Connect to the remote server
+        logger.info(f"🔐 Connecting to {hostname} on port {port}...")
+        client.connect(
+            hostname=hostname,
+            port=port,
+            username=username,
+            password=password
+        )
+
+        # First execute the test command
+        logger.info(f"🚀 Executing test command:>>>>>>>> {commands['test']}")
+        stdin, stdout, stderr = client.exec_command(commands['test'], timeout=timeout)
+        exit_status = stdout.channel.recv_exit_status()
+        stdout_str = stdout.read().decode('utf-8')
+        stderr_str = stderr.read().decode('utf-8')
+
+        if exit_status != 0:
+            logger.info(f"❌ Test command failed with exit code: {exit_status}")
+            logger.info("🛑 Aborting - not running the main command.")
+            return stdout_str, stderr_str, exit_status
+
+        logger.info("✅ Test command succeeded. \n🚀  Now executing run command...")
+
+        # If test succeeded, execute the run command
+        logger.info(f"🚀 Executing run command:>>>>>>>> {commands['run']}")
+        stdin, stdout, stderr = client.exec_command(commands['run'], timeout=timeout)
+        exit_status = stdout.channel.recv_exit_status()
+        stdout_str = stdout.read().decode('utf-8')
+        stderr_str = stderr.read().decode('utf-8')
+
+        # Print status
+        if exit_status == 0:
+            logger.info("✅ Run command executed successfully.")
+        else:
+            logger.info(f"❌ Run command failed with exit code: {exit_status}")
+
+        # Return results from the run command
+        return stdout_str, stderr_str, exit_status
+
+    except Exception as e:
+        logger.info(f"❌ Error: {str(e)}")
+        return "", str(e), -1
+
+    finally:
+        # Always close the connection
+        client.close()
+        logger.info("🔐 SSH connection closed.")
+
+# Helper Function
+# -----------------
+def parse_perl_output(stdout: str, stderr: str, exit_code: int) -> dict:
+    working_messages = [line for line in stdout.splitlines() if line.strip()]
+
+    stderr_lines = [line for line in stderr.splitlines() if line.strip()]
+    warnings = [warn for warn in stderr_lines if "warning" in warn.lower()]
+    errors = [err for err in stderr_lines if "error" in err.lower()]
+    other_stderr = [serr for serr in stderr_lines if serr not in warnings + errors]
+
+    return {
+        "working_on": working_messages,
+        "warnings": warnings,
+        "errors": errors,
+        "other_stderr": other_stderr,
+        "exit_code": exit_code
+    } 
+ 
+  
+# *********************************************************
 # 5.0 Main Flow ----
+# *********************************************************
 @flow(name='DAILY MASTER IMPORT', log_prints=True)
 def master_flow():
     logger = get_run_logger()
-    logger.info("🚀 Starting Viljoen Pipeline")
+    logger.info("🚀 STARTING VILJOEN PIPELINE")
+ 
+    logger.info(">>>>>>>>>>>>>> ⭐ 1. DOWNLOADING PROCESS..>>>>>>>>>>>>>>>>>>>")
     download_data()
+ 
+    logger.info(">>>>>>>>>>>>>> ⭐ 2. EXTRACTION PROCESS.....>>>>>>>>>>>>>>>>>>>")
     raw_data = extract_data()
+ 
+    logger.info(">>>>>>>>>>>>>> ⭐ 3. TRANSFORMATION PROCESS...>>>>>>>>>>>>>>>>>>>")
     clean_df = transform_data(raw_data)
-    print(clean_df.head())
+ 
+    logger.info(">>>>>>>>>>>>>>⭐ 4. VALIDATION PROCESS...>>>>>>>>>>>>>>>>>>>")
     validate_data(clean_df)
+ 
+    logger.info(">>>>>>>>>>>>>> ⭐ 5. DATA LOADING PROCESS...>>>>>>>>>>>>>>>>>>>")
     load_to_local(clean_df)
-    # 
+    upload_to_server()
+ 
+    logger.info(">>>>>>>>>>>>>> ⭐ 6. RUNNING IMPORTATION SCRIPT...>>>>>>>>>>>>>>>>>>>")
+    out, err, cod = run_import()
+    result = parse_perl_output(out, err, cod)
+    for key, value in result.items():
+        logger.warning(f"❌ {key}: {value}")
+ 
     logger.info("🏁 Viljoen Pipeline Finished Successfully")
+
+ 
+ 
+ # *********************************************************
 # 6.0 Run ----
+ # *********************************************************
 if __name__ == '__main__':
-    master_flow()
-
-
+    master_flow.serve(
+        name="daily-viljoen-deployment",
+        cron="20 8 * * *"
+    )
+ 
+ 
+ 
+ # *********************************************************
 # 7.0 Deployment
-# * prefect deploy [OPTIONS] [ENTRYPOINT] e.g ./etl-with-prefect/main.py:main_flow
-# * run `prefect deploy -name test-deployment ./etl-with-prefect/main.py:main_flow`
-# * run `prefect dashboard`
+# Your flow 'DAILY MASTER IMPORT' is being served and polling for scheduled runs!
+
+# To trigger a run for this flow, use the following command:
+
+#         $ prefect deployment run 'DAILY MASTER IMPORT/daily-viljoen-deployment'
