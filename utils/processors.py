@@ -42,7 +42,7 @@ GROUPS: Dict[str, List[Tuple[str, Optional[str]]]] = {
         ("pandera.typing.pandas", None),
     ],
     "ux": [
-        ("tqdm", None),
+        ("tqdm", None), 
         ("tqdm.notebook", None),
         ("ipywidgets", None)
     ]

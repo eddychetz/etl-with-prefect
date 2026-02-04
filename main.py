@@ -48,7 +48,7 @@ load_dotenv()
 # Print current working directory
 print(os.getcwd()) # os.getcwd()
 # Download data ----
-@task(name='')
+@task(name='Download data from FTP server', retries=3)
 def download_data():
     """
     Connects to SFTP and downloads Vilbev-{YYYYMMDD}.zip after removing
@@ -138,10 +138,56 @@ def download_data():
         except Exception:
             pass
 # 2.0 Extract ----
-@task
-def extract():
-    print('Hello, step 1 is running!!')
+@task(name='')
+def extract_data() -> pd.DataFrame:
+    """
+    Extract the first CSV file from a ZIP archive and load it into a pandas DataFrame.
+    Handles:
+    - file existence checks
+    - multiple CSV files (selects first match)
+    - safe extraction into a temp folder
+    - consistent return behavior
+    """
+    zip_file_path = get_latest_zip(os.getenv('BASE_DIR'))
+    logger = get_run_logger()
+    if not os.path.exists(zip_file_path):
+        raise FileNotFoundError(f"❌ ZIP file does not exist: {zip_file_path}")
 
+    logger.info("📦 Reading ZIP archive!")
+
+    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+
+        # List all files
+        file_list = zip_ref.namelist()
+        logger.info("📁 Files inside ZIP:", file_list)
+
+        # find CSV file(s)
+        csv_files = [f for f in file_list if f.lower().endswith(".csv")]
+
+        if not csv_files:
+            raise ValueError("❌ No CSV file found inside ZIP.")
+
+        # Use the first CSV file found
+        csv_file_name = csv_files[0]
+        logger.info(f"📄 Found CSV file: {csv_file_name}")
+
+        # Ensure extraction directory exists
+        extract_dir = "data"
+        os.makedirs(extract_dir, exist_ok=True)
+
+        # Extract file (optional but useful for debugging)
+        extracted_path = zip_ref.extract(csv_file_name, path=extract_dir)
+        logger.info(f"📤 Extracted to: {extracted_path}")
+
+        # Load CSV into pandas directly from ZIP
+        with zip_ref.open(csv_file_name) as csv_file:
+            try:
+                df = pd.read_csv(csv_file)
+                logger.info(f"✅ Loaded CSV: {csv_file_name}")
+            except Exception as e:
+                raise ValueError(f"❌ Failed to read CSV inside ZIP: {e}")
+
+    return df
 # 3.0 Transform ----
 @task
 def transform():
@@ -158,8 +204,8 @@ def master_flow():
     logger = get_run_logger()
     logger.info("🚀 Starting Viljoen Pipeline")
     download_data()
-    step1 = extract()
-    print(step1)
+    raw = extract_data()
+    print(raw.head())
     step2 = transform()
     print(step2)
     step3 = load()
