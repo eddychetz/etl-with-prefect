@@ -10,7 +10,7 @@ pull:
 
 # This section defines your actual deployment
 deployments:
-- name: "daily-import-github"
+- name: "daily-viljoen-deployment"
   entrypoint: "main.py:master_flow"
   work_pool:
     name: "default-agent-pool"
