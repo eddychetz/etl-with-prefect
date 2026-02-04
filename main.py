@@ -494,7 +494,7 @@ def run_import(timeout: int = 120):
     # Define commands
     commands = {
         'test': "/usr/local/eroute2market/supply_chain/scripts/importtxns.pl /home/viljoenbev/data 1",
-        'run': "/usr/local/eroute2market/supply_chain/scripts/importtxns.pl /home/viljoenbev/data 1"
+        'run': "/usr/local/eroute2market/supply_chain/scripts/importtxns.pl /home/viljoenbev/data"
     }
 
     # If no password provided, prompt for it securely
