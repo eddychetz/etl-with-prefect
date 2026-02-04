@@ -1,0 +1,18 @@
+# prefect.yaml
+
+# This section tells Prefect how to get your code at runtime
+pull:
+- prefect.deployments.steps.git_clone:
+    repository: https://github.com/eddychetz/etl-with-prefect.git
+    branch: main
+- prefect.deployments.steps.set_working_directory:
+    directory: "{{ steps.git_clone.directory }}"
+
+# This section defines your actual deployment
+deployments:
+- name: "daily-import-github"
+  entrypoint: "main.py:master_flow"
+  work_pool:
+    name: "default-agent-pool"
+  schedule:
+    cron: "20 8 * * *"
