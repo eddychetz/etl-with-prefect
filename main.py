@@ -12,7 +12,7 @@ import getpass
 from glob import glob
 from pathlib import Path
 from dotenv import load_dotenv
-from utils.processors import get_latest_zip # utils.py
+from utils.processors import get_latest_zip, validate_data, validate_dates
 from typing import Tuple, Optional, Callable
 # import ftplib
 # import tempfile
@@ -148,7 +148,7 @@ def extract_data() -> pd.DataFrame:
     - safe extraction into a temp folder
     - consistent return behavior
     """
-    zip_file_path = get_latest_zip(os.getenv('BASE_DIR'))
+    zip_file_path = get_latest_zip(directory=os.getenv('zip_file_path'), pattern='Vilbev-*.zip')
     logger = get_run_logger()
     if not os.path.exists(zip_file_path):
         raise FileNotFoundError(f"❌ ZIP file does not exist: {zip_file_path}")
@@ -172,7 +172,7 @@ def extract_data() -> pd.DataFrame:
         logger.info(f"📄 Found CSV file: {csv_file_name}")
 
         # Ensure extraction directory exists
-        extract_dir = "data"
+        extract_dir = os.getenv('BASE_DIR')
         os.makedirs(extract_dir, exist_ok=True)
 
         # Extract file (optional but useful for debugging)
@@ -190,13 +190,151 @@ def extract_data() -> pd.DataFrame:
     return df
 # 3.0 Transform ----
 @task
-def transform():
-    print('Hello, step 2 is running!!')
+def transform_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Function to transform Viljoen Beverages data
 
+    Args:
+        df: Input dataframe to transform
+        returns: Transformed dataframe
+
+    """
+    logger = get_run_logger()
+    # Standard column layout
+    columns=[
+        'SellerID','GUID','Date','Reference','Customer_Code','Name','Physical_Address1',\
+        'Physical_Address2','Physical_Address3','Physical_Address4','Telephone',\
+        'Stock_Code','Description','Price_Ex_Vat','Quantity','RepCode','ProductBarCodeID'
+        ]
+    # Create an empty dataframe
+    df1=pd.DataFrame(columns=columns)
+
+    # Build the dataframe
+    df1['Date']=df['Date']
+    df1['SellerID']='VILJOEN'
+    df1['GUID']=0
+    df1['Reference']=df['Reference']
+    df1['Customer_Code']=df['Customer code']
+    df1['Name']=df['Customer name']
+    df1['Physical_Address1']=df['Physical_Address1']
+    df1['Physical_Address2']=df['Physical_Address2']
+    df1['Physical_Address3']=df['Physical_Address3']
+    df1['Physical_Address4']=(
+        df['Deliver1'].fillna('').astype(str) +' '+
+        df['Deliver2'].fillna('').astype(str) +' '+
+        df['Deliver3'].fillna('').astype(str) +' '+
+        df['Deliver4'].fillna('').astype(str)
+        ).str.strip()
+
+    df1['Telephone']=df['Telephone']
+    df1['Stock_Code']=df['Product code']
+    df1['Description']=df['Product description']
+    df1['Price_Ex_Vat']=round(abs(df['Value']/df['Quantity']),2)
+    df1['Quantity']=df['Quantity']
+    df1['RepCode']=df['Rep']
+    df1['ProductBarCodeID']=''
+
+    print(f"ℹ️ Total quantity: {np.sum(df1['Quantity']):.0f}\n")
+
+    df2=df1.copy()
+    df2['Date']=pd.to_datetime(df2['Date'])
+    df2['Date']=df2['Date'].apply(lambda x: x.strftime("%Y-%m-%d"))
+
+    df1["Name"].fillna('SPAR NORTH RAND (11691)', inplace=True)
+    #   DATE FORMAT CLEANING
+    # -----------------------------
+    print("✅ Date fomat cleaned")
+    df1['Date'] = pd.to_datetime(df1['Date'], errors="coerce").dt.strftime("%Y-%m-%d")
+    logger.info("✅ Data transformation complete!")
+
+    return df1
 # 4.0 Load ----
-@task
-def load():
-    print('Hello, step 3 is running!!')
+@task(name='Loading data to local repo')
+def load_to_local(
+    df: pd.DataFrame,
+    create_dir_if_missing: bool = True,
+    delete_existing_csvs: bool = True,        # ← new flag to control cleanup
+    restrict_delete_to_prefix: str | None = None  # e.g., "Viljoenbev_" to only delete those CSVs
+) -> Tuple[str, bool]:
+    """
+    Save cleaned data to a CSV inside the folder specified by OUTPUT_DIR in .env,
+    only if:
+    - the DataFrame's date range is entirely within the last 3 days, and
+    - the latest date's month is the current month or the previous month.
+    Skips save if a file with the same name already exists.
+
+    Returns
+    -------
+    (full_path, saved) : Tuple[str, bool]
+        full_path -> absolute path to the intended CSV
+        saved     -> True if file was written, False if skipped (already existed)
+    """
+    # --- Resolve OUTPUT_DIR ---
+    output_dir = os.getenv("OUTPUT_DIR")
+    if not output_dir:
+        raise ValueError("Environment variable 'OUTPUT_DIR' is not set in your environment or .env file.")
+    logger = get_run_logger()
+    output_dir_path = Path(os.path.abspath(os.path.expanduser(output_dir)))
+    if not output_dir_path.is_dir():
+        if create_dir_if_missing:
+            output_dir_path.mkdir(parents=True, exist_ok=True)
+            logger.info(f"📁 Created output directory: {output_dir_path}")
+        else:
+            raise FileNotFoundError(f"Output directory does not exist: {output_dir_path}")
+
+    # ---- DELETE EXISTING CSVs IN CLEANED FOLDER (before saving) ----
+    if delete_existing_csvs:
+        # Choose the pattern:
+        #   "*.csv" to delete ALL CSVs in the folder
+        #   f"{restrict_delete_to_prefix}*.csv" to only delete those starting with a prefix
+        if restrict_delete_to_prefix:
+            pattern = f"{restrict_delete_to_prefix}*.csv"
+        else:
+            pattern = "*.csv"
+
+        logger.info(f"🧹 Cleaning up existing CSV file in:\n📁 {output_dir_path}.")
+        deleted_any = False
+        for p in output_dir_path.glob(pattern):
+            try:
+                p.unlink()
+                deleted_any = True
+                logger.info(f"🗑️ Deleted CSV: {p.name}")
+            except Exception as e:
+                logger.error(f"❌ Error deleting {p.name}: {e}")
+        if not deleted_any:
+            logger.info("ℹ️ No matching CSV files found to delete.")
+
+    # --- Prepare and validate dates ---
+    if "Date" not in df.columns:
+        raise KeyError("Input DataFrame must contain a 'Date' column.")
+
+    data = df.copy()
+    data["Date"] = pd.to_datetime(data["Date"], errors="coerce")
+
+    if data["Date"].isna().all():
+        raise ValueError("All values in 'Date' are NaT after parsing. Check your input data.")
+
+    min_date = data["Date"].dropna().min()
+    max_date = data["Date"].dropna().max()
+
+    # Validation per your rule:
+    validate_dates(min_date, max_date, lookback_days=3)
+
+    # --- Build deterministic filename and check for existence ---
+    min_str = min_date.strftime("%Y-%m-%d")
+    max_str = max_date.strftime("%Y-%m-%d")
+    filename = f"Viljoenbev_{min_str}_to_{max_str}.csv"
+    full_path = output_dir_path / filename
+
+    if full_path.exists():
+        logger.info(f"🛑 File already exists, skipping save:\n📁 {full_path}")
+        return str(full_path), False
+
+    # --- Finalize and save ---
+    data["Date"] = data["Date"].dt.strftime("%Y-%m-%d")
+    data.to_csv(full_path, index=False)
+    logger.info(f"\n✅ Data saved to:\n📁 {full_path}")
+    return str(full_path), True
 
 # 5.0 Main Flow ----
 @flow(name='DAILY MASTER IMPORT', log_prints=True)
@@ -204,12 +342,12 @@ def master_flow():
     logger = get_run_logger()
     logger.info("🚀 Starting Viljoen Pipeline")
     download_data()
-    raw = extract_data()
-    print(raw.head())
-    step2 = transform()
-    print(step2)
-    step3 = load()
-    print(step3)
+    raw_data = extract_data()
+    clean_df = transform_data(raw_data)
+    print(clean_df.head())
+    validate_data(clean_df)
+    load_to_local(clean_df)
+    # 
     logger.info("🏁 Viljoen Pipeline Finished Successfully")
 # 6.0 Run ----
 if __name__ == '__main__':

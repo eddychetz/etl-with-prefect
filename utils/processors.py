@@ -1,7 +1,6 @@
 # # LIBRARIES
 import os
 import sys
-from glob import glob
 import importlib
 import importlib.util
 from datetime import timedelta, datetime
@@ -9,6 +8,7 @@ import subprocess
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional
 import pandas as pd
+import pandera as pa
 GROUPS: Dict[str, List[Tuple[str, Optional[str]]]] = {
     # (import_name, pip_name or None if same)
     "stdlib": [
@@ -47,7 +47,13 @@ GROUPS: Dict[str, List[Tuple[str, Optional[str]]]] = {
         ("ipywidgets", None)
     ]
 }
-
+PIP_IMPORT_ALIASES = {
+    # pip-name              : import-name
+    "python-dotenv": "dotenv",
+    "mysql-connector-python": "mysql.connector",
+    # examples you might add later:
+    # "pillow": "PIL",
+}
 # ---------------------------
 # 2) Utils
 # ---------------------------
@@ -80,7 +86,7 @@ def import_module_dotted(import_name: str):
     Example: import_module_dotted("tqdm.notebook")
     """
     return importlib.import_module(import_name)
-
+from pandera.typing.pandas import Series
 # ---------------------------
 # 3) Ensure one dependency: import if present; otherwise install then import
 # ---------------------------
