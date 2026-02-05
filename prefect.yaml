@@ -11,7 +11,7 @@ pull:
     branch: main
     # access_token: "{{ prefect.blocks.secret.github-token }}"
 - prefect.deployments.steps.set_working_directory:
-    directory: "{{ clone_step.directory }}"
+    directory: "."
 - prefect.deployments.steps.run_shell_script:
     script: "mkdir -p data/raw data/clean"
 
