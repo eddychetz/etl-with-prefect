@@ -1,14 +1,21 @@
+# ===============
 # prefect.yaml
+# ===============
 
 # This section tells Prefect how to get your code at runtime
+# -------------------------------------------------------------
 pull:
 - prefect.deployments.steps.git_clone:
     repository: https://github.com/eddychetz/etl-with-prefect.git
     branch: main
+    access_token: "{{ prefect.blocks.secret.github-token }}"
 - prefect.deployments.steps.set_working_directory:
-    directory: "{{ steps.git_clone.directory }}"
+    directory: "{{ clone_step.directory }}"
+- prefect.deployments.steps.run_shell_script:
+    script: "mkdir -p data/raw data/clean"
 
 # This section defines your actual deployment
+# ----------------------------------------
 deployments:
 - name: "daily-viljoen-deployment"
   entrypoint: "main.py:master_flow"
