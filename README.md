@@ -1,6 +1,13 @@
-# etl-with-prefect
+# ETL PIPELINE WITH PREFECT
 
 A data pipeline for daily data injestions
+
+## 1. Introduction
+- To create a virtual environment within your directory `etl-with-prefect`, run `py -m venv prefect-env`.
+- To activate the virtual environment, run `prefect-venv\Scripts\activate`
+- To install prefect, run `pip install prefect`.
+- To open a virtual environment, run `code .`
+
 
 ## STEPS:
 
