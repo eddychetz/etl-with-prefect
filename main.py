@@ -31,6 +31,7 @@ import paramiko
 # For workflow automation
 # -----------------------
 from prefect import task, flow, get_run_logger # type: ignore
+from prefect.blocks.system import JSON, Secret
 
 # Ignore warnings
 # ----------------
@@ -38,9 +39,11 @@ import warnings
 warnings.simplefilter('ignore')
 
 # Load environment variables
+# ------------------------------
 load_dotenv()
 
 # Print current working directory
+# ----------------------------------
 print(os.getcwd())
  
 # *********************************************************
@@ -52,18 +55,26 @@ def download_data():
     Connects to SFTP and downloads Vilbev-{YYYYMMDD}.zip after removing
     any existing Vilbev-*.zip files in ./data/raw.
     """
+    # Fetch from Cloud Blocks
+    # --------------------------------
+    config = JSON.load('ftp-config').value
+    config_paths = JSON.load("project-paths").value
+    password = Secret.load('ftp-pass').get()
+ 
     logger = get_run_logger()
     current_date = datetime.now().strftime('%Y%m%d')
 
     # ---- PATHS ----
-    data_dir = Path("./data/raw")
+    # ---------------------
+    data_dir = config_paths['BASE_DIR'] # Path("./data/raw")
     data_dir.mkdir(parents=True, exist_ok=True)
 
     local_file = data_dir / f"Vilbev-{current_date}.zip"
     remote_file = f"/home/viljoenbev/Vilbev-{current_date}.zip"
 
     # ---- DELETE LOCAL Vilbev FILES FIRST ----
-    logger.info("🧹 Cleaning up existing Vilbev-*.zip files in ./data/raw ...")
+    # -----------------------------------------------
+    logger.info(f"🧹 Cleaning up existing Vilbev-*.zip files in {data_dir} ...")
     deleted_any = False
     for p in data_dir.glob("Vilbev-*.zip"):
         try:
@@ -76,6 +87,7 @@ def download_data():
         logger.info("ℹ️  No existing Vilbev-*.zip files found to delete.")
 
     # (Optional) ensure target file does not exist—even if name pattern changes in future
+    # -----------------------------------------------------------------------------------------
     if local_file.exists():
         try:
             local_file.unlink()
@@ -84,22 +96,19 @@ def download_data():
             logger.error(f"❌ Error deleting pre-existing target file {local_file.name}: {e}")
 
     # ---- PARAMIKO CLIENT SETUP ----
+    # ---------------------------------------
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
     sftp = None
     try:
         # ---- CONNECT ----
-        host = os.getenv('ftp_host')
-        port = int(os.getenv('ftp_port'))  # ensure integer
-        user = os.getenv('ftp_user')
-        pwd  = os.getenv('ftp_pass')
-
+        # ----------------------------------
         client.connect(
-            hostname=host,
-            port=port,
-            username=user,
-            password=pwd,
+            hostname=config['host',
+            port=config['port'],
+            username=config['user'],
+            password=password,
             allow_agent=False,
             look_for_keys=False,
             timeout=30,
@@ -108,6 +117,7 @@ def download_data():
         logger.info("🔐 Connected to SFTP server")
 
         # ---- DOWNLOAD ----
+        # -----------------------------
         logger.info(f"📥 Downloading: {remote_file} → {local_file}")
         sftp.get(
             remotepath=remote_file,
@@ -126,6 +136,7 @@ def download_data():
         return None
     finally:
         # ---- CLEAN UP ----
+        # ----------------------
         try:
             if sftp is not None:
                 sftp.close()
@@ -159,28 +170,34 @@ def extract_data() -> pd.DataFrame:
     with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
 
         # List all files
+        # ------------------
         file_list = zip_ref.namelist()
         logger.info("📁 Files inside ZIP:", file_list)
 
         # find CSV file(s)
+        # ---------------------
         csv_files = [f for f in file_list if f.lower().endswith(".csv")]
 
         if not csv_files:
             raise ValueError("❌ No CSV file found inside ZIP.")
 
         # Use the first CSV file found
+        # ---------------------------------
         csv_file_name = csv_files[0]
         logger.info(f"📄 Found CSV file: {csv_file_name}")
 
         # Ensure extraction directory exists
+        # -----------------------------------
         extract_dir = os.getenv('BASE_DIR')
         os.makedirs(extract_dir, exist_ok=True)
 
         # Extract file (optional but useful for debugging)
+        # --------------------------------------------------
         extracted_path = zip_ref.extract(csv_file_name, path=extract_dir)
         logger.info(f"📤 Extracted to: {extracted_path}")
 
         # Load CSV into pandas directly from ZIP
+        # ------------------------------------------
         with zip_ref.open(csv_file_name) as csv_file:
             try:
                 df = pd.read_csv(csv_file)
@@ -204,16 +221,20 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
 
     """
     logger = get_run_logger()
+ 
     # Standard column layout
+    # ---------------------------
     columns=[
         'SellerID','GUID','Date','Reference','Customer_Code','Name','Physical_Address1',\
         'Physical_Address2','Physical_Address3','Physical_Address4','Telephone',\
         'Stock_Code','Description','Price_Ex_Vat','Quantity','RepCode','ProductBarCodeID'
         ]
     # Create an empty dataframe
+    # ------------------------------
     df1=pd.DataFrame(columns=columns)
 
     # Build the dataframe
+    # -----------------------
     df1['Date']=df['Date']
     df1['SellerID']='VILJOEN'
     df1['GUID']=0
@@ -240,10 +261,11 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     df2=df1.copy()
     df2['Date']=pd.to_datetime(df2['Date'])
     # filling up missing Name for Spar Northrand
+    # ------------------------------------------
     df1["Name"].fillna('SPAR NORTH RAND (11691)', inplace=True)
     
     #   DATE FORMAT CLEANING - Always monitor on the date format when transforming data
-    # -----------------------------
+    # -------------------------------------------------------------------------------------
     logger.info("✅ Date fomat cleaned")
     df1['Date'] = pd.to_datetime(df1['Date'], errors="coerce").dt.strftime("%Y-%d-%m")
     logger.info("✅ Data transformation complete!")
@@ -276,6 +298,7 @@ def load_to_local(
 
 
     # --- Resolve OUTPUT_DIR ---
+    # ----------------------------
     output_dir = os.getenv("OUTPUT_DIR")
     if not output_dir:
         raise ValueError("Environment variable 'OUTPUT_DIR' is not set in your environment or .env file.")
@@ -289,6 +312,7 @@ def load_to_local(
             raise FileNotFoundError(f"Output directory does not exist: {output_dir_path}")
 
     # ---- DELETE EXISTING CSVs IN CLEANED FOLDER (before saving) ----
+    # --------------------------------------------------------------------
     if delete_existing_csvs:
         # Choose the pattern:
         #   "*.csv" to delete ALL CSVs in the folder
@@ -311,6 +335,7 @@ def load_to_local(
             logger.info("ℹ️  No matching CSV files found to delete.")
 
     # --- Prepare and validate dates ---
+    # ---------------------------------------
     if "Date" not in df.columns:
         raise KeyError("Input DataFrame must contain a 'Date' column.")
 
@@ -324,9 +349,11 @@ def load_to_local(
     max_date = data["Date"].dropna().max()
 
     # Validation per your rule:
+    # -------------------------
     validate_dates(min_date, max_date, lookback_days=3)
 
     # --- Build deterministic filename and check for existence ---
+    # -------------------------------------------------------------
     min_str = min_date.strftime("%Y-%m-%d")
     max_str = max_date.strftime("%Y-%m-%d")
     filename = f"Viljoenbev_{min_str}_to_{max_str}.csv"
@@ -337,6 +364,7 @@ def load_to_local(
         return str(full_path), False
 
     # --- Finalize and save ---
+    # ----------------------------
     data["Date"] = data["Date"].dt.strftime("%Y-%m-%d")
     data.to_csv(full_path, index=False)
     logger.info(f"\n✅ Data saved to:\n📁 {full_path}")
@@ -365,17 +393,23 @@ def upload_to_server(csv_file_path: str = None,) -> Optional[str]:
     logger = get_run_logger()
  
     # ---- CONNECT ----
-    sftp_host = os.getenv('ftp_host')
-    sftp_port = int(os.getenv('ftp_port'))  # ensure integer
-    sftp_user = os.getenv('ftp_user')
-    sftp_pass  = os.getenv('ftp_pass')
-
-    remote_dir = os.getenv('ftp_dir')
+    # 1. Fetch from Cloud Blocks
+    # ------------------------------
+    config = JSON.load("ftp-config").value
+    config_paths = JSON.load("project-paths").value
+   
+    sftp_host=config['host']
+    sftp_port=config['port']
+    sftp_user=config['user']
+    password = Secret.load("ftp-pass").get()
+    remote_dir = config['remote_dir']
 
     # Fallback to discover a file if not provided (mirrors your original default idea)
+    # --------------------------------------------------------------------------------
     if csv_file_path is None:
         # Adjust `output_dir` to your actual variable/scope if needed
-        output_dir = os.getenv('OUTPUT_DIR')
+        # ------------------------------------------------------------
+        output_dir = config_paths['OUTPUT_DIR']
         matches = glob(os.path.join(output_dir, 'Viljoenbev_*.csv'))
         if not matches:
             logger.warning("⚠️ No CSV file found matching 'Viljoenbev_*.csv'.")
@@ -384,27 +418,31 @@ def upload_to_server(csv_file_path: str = None,) -> Optional[str]:
 
     try:
         # Verify the local file exists
+        # ----------------------------
         if not os.path.exists(csv_file_path):
             logger.warning(f"⚠️ Local file not found: {csv_file_path}")
             return None
 
         filename = os.path.basename(csv_file_path)
         # Normalize remote path to POSIX style for SFTP
+        # ------------------------------------------------
         remote_dir_posix = remote_dir.replace('\\', '/').rstrip('/') + '/'
         remote_path = (remote_dir_posix + filename)
 
         # Create SSH client and connect
+        # -------------------------------
         ssh = paramiko.SSHClient()
 
         # WARNING: Auto-adding host keys reduces security. Prefer loading known hosts in production.
+        # -------------------------------------------------------------------------------------------
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         logger.info(f"🔐 Connecting to FTP server as {sftp_user}.")
         ssh.connect(
-            hostname=sftp_host,
-            port=sftp_port,
-            username=sftp_user,
-            password=sftp_pass,
+            hostname=config['host'],
+            port=config['port'],
+            username=config['user'],
+            password=password,
             look_for_keys=False,
             allow_agent=False,
             timeout=30
@@ -412,16 +450,20 @@ def upload_to_server(csv_file_path: str = None,) -> Optional[str]:
 
         try:
             # Open SFTP session
+            # ----------------------
             sftp = ssh.open_sftp()
 
             # Ensure remote directory exists (create recursively if missing)
+            # --------------------------------------------------------------
             _ensure_remote_dir(sftp, remote_dir_posix)
 
             # Upload with confirmation via file size/stat check
+            # ---------------------------------------------------
             logger.info(f"🚀 Uploading {filename} to {remote_path}...")
             sftp.put(csv_file_path, remote_path)
 
             # Optional: verify upload completed by checking remote file size
+            # -----------------------------------------------------------------
             local_size = os.path.getsize(csv_file_path)
             remote_stat = sftp.stat(remote_path)
             if remote_stat.st_size != local_size:
@@ -486,29 +528,36 @@ def run_import(timeout: int = 120):
     logger = get_run_logger()
     
     # Access login credentials
-    hostname = os.getenv('host_name')
-    port = int(os.getenv('port'))
-    username = os.getenv('user_name')
-    password = os.getenv('password')
+    # ---------------------------------
+    config = JSON.load('toby-config').value
+    password = Secret.load('toby-pass').get()
+    hostname = config['host']
+    port = config['port']
+    username = config['user']
 
     # Define commands
+    # ----------------------
     commands = {
         'test': "/usr/local/eroute2market/supply_chain/scripts/importtxns.pl /home/viljoenbev/data 1",
         'run': "/usr/local/eroute2market/supply_chain/scripts/importtxns.pl /home/viljoenbev/data"
     }
 
     # If no password provided, prompt for it securely
+    # -----------------------------------------------
     if password is None:
         password = getpass.getpass(f"🔐 Enter SSH password for {username}@{hostname}: ")
 
     # Create an SSH client instance
+    # ---------------------------------
     client = paramiko.SSHClient()
 
     try:
         # Automatically add the server's host key
+        # ------------------------------------------
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         # Connect to the remote server
+        # -----------------------------
         logger.info(f"🔐 Connecting to {hostname} on port {port}...")
         client.connect(
             hostname=hostname,
@@ -518,6 +567,7 @@ def run_import(timeout: int = 120):
         )
 
         # First execute the test command
+        # ----------------------------------
         logger.info(f"🚀 Executing test command:>>>>>>>> {commands['test']}")
         stdin, stdout, stderr = client.exec_command(commands['test'], timeout=timeout)
         exit_status = stdout.channel.recv_exit_status()
@@ -532,6 +582,7 @@ def run_import(timeout: int = 120):
         logger.info("✅ Test command succeeded. \n🚀  Now executing run command...")
 
         # If test succeeded, execute the run command
+        # ---------------------------------------------
         logger.info(f"🚀 Executing run command:>>>>>>>> {commands['run']}")
         stdin, stdout, stderr = client.exec_command(commands['run'], timeout=timeout)
         exit_status = stdout.channel.recv_exit_status()
@@ -539,12 +590,14 @@ def run_import(timeout: int = 120):
         stderr_str = stderr.read().decode('utf-8')
 
         # Print status
+        # ------------------
         if exit_status == 0:
             logger.info("✅ Run command executed successfully.")
         else:
             logger.info(f"❌ Run command failed with exit code: {exit_status}")
 
         # Return results from the run command
+        # ----------------------------------------
         return stdout_str, stderr_str, exit_status
 
     except Exception as e:
@@ -553,6 +606,7 @@ def run_import(timeout: int = 120):
 
     finally:
         # Always close the connection
+        # ----------------------------
         client.close()
         logger.info("🔐 SSH connection closed.")
 
@@ -596,7 +650,7 @@ def master_flow():
     validate_data(clean_df)
  
     logger.info(">>>>>>>>>>>>>> ⭐ 5. DATA LOADING PROCESS...>>>>>>>>>>>>>>>>>>>")
-    load_to_local(clean_df)
+    # load_to_local(clean_df)
     upload_to_server()
  
     logger.info(">>>>>>>>>>>>>> ⭐ 6. RUNNING IMPORTATION SCRIPT...>>>>>>>>>>>>>>>>>>>")
@@ -609,9 +663,9 @@ def master_flow():
 
  
  
- # *********************************************************
+# *********************************************************
 # 6.0 Run ----
- # *********************************************************
+# *********************************************************
 if __name__ == '__main__':
     master_flow.serve(
         name="daily-viljoen-deployment",
