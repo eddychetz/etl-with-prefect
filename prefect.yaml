@@ -6,11 +6,12 @@
 # -------------------------------------------------------------
 pull:
 - prefect.deployments.steps.git_clone:
+    id: clone_step
     repository: https://github.com/eddychetz/etl-with-prefect.git
     branch: main
     # access_token: "{{ prefect.blocks.secret.github-token }}"
 - prefect.deployments.steps.set_working_directory:
-    directory: "."
+    directory: "{{ clone_step.directory }}"
 - prefect.deployments.steps.run_shell_script:
     script: "mkdir -p data/raw data/clean"
 
